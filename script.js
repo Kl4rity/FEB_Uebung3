@@ -46,12 +46,24 @@ var ViewHandler = {
         ViewHandler.removeTodoListItems();
         ViewHandler.writeTodoList();
     }
+    , showAlert: (title, content) => {
+        var dnTodoListTable = document.getElementById("todoListTable");
+
+        var alertBox = document.createElement("div");
+        alertBox.classList += "alert alert-warning alert-dismissible fade show";
+        alertBox.role = "alert";
+
+        alertBox.innerHTML = 'Hey! ' + title + 'with the content ' + content + ' was added! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>'
+        
+        dnTodoListTable.parentElement.insertBefore(alertBox, dnTodoListTable.nextSibling);
+    }
 }
 
 var Controller = {
     addItem: () => {
         var data = ViewHandler.getNewItemData();
         todoList.push(TodoListItem(data.title, data.content));
+        ViewHandler.showAlert(data.title, data.content);
         ViewHandler.updateToDoListItems();
     }
     , init: ()=>{
